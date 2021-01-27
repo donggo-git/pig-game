@@ -23,12 +23,10 @@ roll.addEventListener('click', function () {
     else {
         currentScore = 0;
         document.querySelector(`#current--${activePlayer}`).textContent = currentScore
-
+        switchPlayer()
     }
 })
-
-//switch player
-holdBtn.addEventListener('click', () => {
+function switchPlayer() {
     if (activePlayer == 0) {
         currentScore = 0
         activePlayer = 1;
@@ -37,4 +35,6 @@ holdBtn.addEventListener('click', () => {
         currentScore = 0
         activePlayer = 0;
     }
-})
+}
+//switch player
+holdBtn.addEventListener('click', () => switchPlayer())
