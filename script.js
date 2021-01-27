@@ -9,7 +9,8 @@ let player0Point = 0;
 let player1Point = 0
 let currentScore = 0;
 let activePlayer = 0;
-
+let player0 = document.querySelector('.player--0');
+let player1 = document.querySelector('.player--1');
 roll.addEventListener('click', function () {
     // roll the dice
     let randomRoll = Math.round(Math.random() * 5 + 1);
@@ -30,10 +31,14 @@ function switchPlayer() {
     if (activePlayer == 0) {
         currentScore = 0
         activePlayer = 1;
+        player0.classList.toggle('player--active')
+        player1.classList.toggle('player--active')
     }
     else {
         currentScore = 0
         activePlayer = 0;
+        player1.classList.toggle('player--active')
+        player0.classList.toggle('player--active')
     }
 }
 //switch player
