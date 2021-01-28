@@ -5,8 +5,7 @@ let dice = document.querySelector('.dice');
 let current0 = document.querySelector('#current--0');
 let current1 = document.querySelector('#current--1')
 let holdBtn = document.querySelector('.btn--hold')
-let player0Point = 0;
-let player1Point = 0
+let scores = [0, 0]
 let currentScore = 0;
 let activePlayer = 0;
 let player0 = document.querySelector('.player--0');
@@ -42,4 +41,14 @@ function switchPlayer() {
     }
 }
 //switch player
-holdBtn.addEventListener('click', () => switchPlayer())
+holdBtn.addEventListener('click', () => {
+    scores[activePlayer] += currentScore
+    document.querySelector(`#score--${activePlayer}`).textContent = scores[activePlayer]
+    document.querySelector(`#current--${activePlayer}`).textContent = 0
+    if (scores[activePlayer] >= 50) {
+        alert(`player ${activePlayer + 1} is the winner`)
+    }
+    switchPlayer()
+
+    console.log(scores)
+})
