@@ -10,20 +10,24 @@ let currentScore = 0;
 let activePlayer = 0;
 let player0 = document.querySelector('.player--0');
 let player1 = document.querySelector('.player--1');
+let resetTheGame = document.querySelector('.btn--new')
+let playing = true
 roll.addEventListener('click', function () {
     // roll the dice
-    let randomRoll = Math.round(Math.random() * 5 + 1);
-    dice.src = `dice-${randomRoll}.png`
+    if (playing) {
+        let randomRoll = Math.round(Math.random() * 5 + 1);
+        dice.src = `dice-${randomRoll}.png`
 
-    if (randomRoll !== 1) {
-        currentScore += randomRoll
-        document.querySelector(`#current--${activePlayer}`).textContent = currentScore
+        if (randomRoll !== 1) {
+            currentScore += randomRoll
+            document.querySelector(`#current--${activePlayer}`).textContent = currentScore
 
-    }
-    else {
-        currentScore = 0;
-        document.querySelector(`#current--${activePlayer}`).textContent = currentScore
-        switchPlayer()
+        }
+        else {
+            currentScore = 0;
+            document.querySelector(`#current--${activePlayer}`).textContent = currentScore
+            switchPlayer()
+        }
     }
 })
 function switchPlayer() {
@@ -42,13 +46,30 @@ function switchPlayer() {
 }
 //switch player
 holdBtn.addEventListener('click', () => {
-    scores[activePlayer] += currentScore
-    document.querySelector(`#score--${activePlayer}`).textContent = scores[activePlayer]
-    document.querySelector(`#current--${activePlayer}`).textContent = 0
-    if (scores[activePlayer] >= 50) {
-        alert(`player ${activePlayer + 1} is the winner`)
+    if (playing) {
+        //add current score to active player
+        scores[activePlayer] += currentScore
+        document.querySelector(`#score--${activePlayer}`).textContent = scores[activePlayer]
+        //reset the current score
+        document.querySelector(`#current--${activePlayer}`).textContent = 0
+        //check who get to 50 first
+        if (scores[activePlayer] >= 50) {
+            dice.classList.add('hidden')
+            alert(`player ${activePlayer + 1} is the winner`)
+            document.querySelector(`.player--${activePlayer}`).classList.add('player--winner')
+            playing = false
+        }
+        //switch player
+        else {
+            switchPlayer()
+        }
     }
-    switchPlayer()
-
-    console.log(scores)
+})
+resetTheGame.addEventListener('click', function () {
+    scores = [0, 0]
+    currentScore = 0;
+    activePlayer = 0;
+    document.querySelector(`#current--${activePlayer}`).textContent = currentScore
+    document.querySelector(`#score--0`).textContent = scores[0]
+    document.querySelector(`#score--1`).textContent = scores[1]
 })
